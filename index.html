@@ -162,7 +162,7 @@
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRuwbj1nGe9CbdwladhDwWuOL0HUC47DPP6f01qyAJVsyLrDWvw_0NLDmmhfGLupvP/exec';
 
 // Allow only one vote per browser:
-const ONE_VOTE_PER_BROWSER = true;
+const ONE_VOTE_PER_BROWSER = false;
 
 // ============================================================
 // COSTUME DATA — add your image URLs in the "img" fields
@@ -236,7 +236,7 @@ regions.forEach(region => {
 // ============================================================
 // Check if already voted
 // ============================================================
-if (ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted')) {
+if (ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_2')) {
     document.getElementById('votedBanner').classList.add('show');
     document.getElementById('btnSubmit').disabled = true;
     document.getElementById('btnSubmit').textContent = 'Jau balsavote';
@@ -250,7 +250,7 @@ function getChecked() { return document.querySelectorAll('input[name="costume"]:
 function updateVotes() {
     const count = getChecked().length;
     document.getElementById('voteCountNum').textContent = count;
-    const alreadyVoted = ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted');
+    const alreadyVoted = ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_2');
     document.getElementById('btnSubmit').disabled = count === 0 || alreadyVoted;
     document.querySelectorAll('.costume-card').forEach(card => {
         card.classList.toggle('selected', card.querySelector('input').checked);
@@ -299,7 +299,7 @@ function submitVotes() {
         body: params
     }).then(() => {
         if (ONE_VOTE_PER_BROWSER) {
-            localStorage.setItem('costume_voted', Date.now());
+            localStorage.setItem('costume_voted_2', Date.now());
             document.getElementById('votedBanner').classList.add('show');
             btn.textContent = 'Jau balsavote';
             btn.disabled = true;
