@@ -22,7 +22,6 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
         .header {
             background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
             color: white; padding: 2.5rem 1.5rem; text-align: center; position: relative; overflow: hidden;
@@ -34,7 +33,6 @@
         }
         .header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 0.5rem; position: relative; }
         .header p { font-size: 1.05rem; font-weight: 300; opacity: 0.9; position: relative; max-width: 600px; margin: 0 auto; }
-
         .vote-bar {
             position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem;
@@ -61,18 +59,14 @@
             font-size: 0.85rem; cursor: pointer; transition: all 0.2s; white-space: nowrap;
         }
         .btn-clear:hover { border-color: var(--accent); color: var(--accent); }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-
         .region-section { margin-bottom: 2.5rem; }
         .region-header {
             font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent-dark);
             padding: 1rem 1.25rem; background: var(--section-bg); border-left: 4px solid var(--accent);
             border-radius: 0 8px 8px 0; margin-bottom: 1.25rem;
         }
-
         .costume-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-
         .costume-card {
             background: var(--card-bg); border: 2px solid var(--border); border-radius: 12px;
             overflow: hidden; cursor: pointer; transition: all 0.25s ease; position: relative;
@@ -81,30 +75,24 @@
         .costume-card.selected { border-color: var(--selected-border); background: var(--selected); box-shadow: 0 4px 16px rgba(139,69,19,0.15); }
         .costume-card.selected .card-check { background: var(--green); border-color: var(--green); }
         .costume-card.selected .card-check svg { opacity: 1; transform: scale(1); }
-
         .card-image-wrap { position: relative; aspect-ratio: 3/4; background: var(--section-bg); overflow: hidden; }
         .card-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
         .costume-card:hover .card-image-wrap img { transform: scale(1.05); }
-
         .card-check {
             position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 8px;
             border: 2px solid rgba(255,255,255,0.7); background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
             display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 2;
         }
         .card-check svg { width: 16px; height: 16px; opacity: 0; transform: scale(0.5); transition: all 0.2s; }
-
         .card-info { padding: 0.75rem 1rem; }
         .card-number { font-size: 0.75rem; font-weight: 600; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.08em; }
         .card-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 500; color: var(--text); margin-top: 0.15rem; }
-
         .costume-card input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
-
         .img-placeholder {
             width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, var(--section-bg), #d4c4b0);
             color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem;
         }
-
         .toast {
             position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
             padding: 1rem 2rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem;
@@ -114,13 +102,11 @@
         .toast.success { background: var(--green); color: white; }
         .toast.error { background: #c0392b; color: white; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
         .voted-banner {
             background: var(--green); color: white; text-align: center; padding: 0.8rem 1.5rem;
             font-weight: 500; display: none;
         }
         .voted-banner.show { display: block; }
-
         @media (max-width: 600px) {
             .costume-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .card-info { padding: 0.5rem 0.7rem; }
@@ -130,16 +116,13 @@
     </style>
 </head>
 <body>
-
 <div class="header">
     <h1>🇱🇹 Tautinių kostiumų galerija</h1>
     <p>Pasirinkite patinkančius kostiumus pažymėdami varnelę. Galima rinktis kelis variantus.</p>
 </div>
-
 <div class="voted-banner" id="votedBanner">
     ✓ Jūs jau balsavote! Ačiū už dalyvavimą.
 </div>
-
 <div class="vote-bar" id="voteBar">
     <div class="vote-count">Pasirinkta: <span id="voteCountNum">0</span></div>
     <div style="display:flex;gap:0.5rem;align-items:center;">
@@ -147,26 +130,12 @@
         <button class="btn-submit" id="btnSubmit" onclick="submitVotes()" disabled>Pateikti balsą</button>
     </div>
 </div>
-
 <div class="container" id="gallery"></div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
-
 <script>
-// ============================================================
-// ⚙️ CONFIGURATION
-// ============================================================
-
-// Paste your Google Apps Script Web App URL here:
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRuwbj1nGe9CbdwladhDwWuOL0HUC47DPP6f01qyAJVsyLrDWvw_0NLDmmhfGLupvP/exec';
+const ONE_VOTE_PER_BROWSER = false;
 
-// Allow only one vote per browser:
-const ONE_VOTE_PER_BROWSER = true;
-
-// ============================================================
-// COSTUME DATA — add your image URLs in the "img" fields
-// ============================================================
 const regions = [
     {
         name: "Aukštaitija",
@@ -177,15 +146,12 @@ const regions = [
     },
     {
         name: "Žemaitija",
-          items: [
+        items: [
             { id: "z13", num: 13, title: "Tautiniai drabužiai", img: "img/zemaitija/DSC_0369.jpg" },
         ]
     },
 ];
 
-// ============================================================
-// Build gallery
-// ============================================================
 const gallery = document.getElementById('gallery');
 const checkSvg = `<svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
@@ -195,7 +161,6 @@ regions.forEach(region => {
     section.innerHTML = `<div class="region-header">${region.name}</div>`;
     const grid = document.createElement('div');
     grid.className = 'costume-grid';
-
     region.items.forEach(item => {
         const label = `${region.name} Nr. ${item.num}`;
         const card = document.createElement('label');
@@ -214,29 +179,22 @@ regions.forEach(region => {
             </div>`;
         grid.appendChild(card);
     });
-
     section.appendChild(grid);
     gallery.appendChild(section);
 });
 
-// ============================================================
-// Check if already voted
-// ============================================================
-if (ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_2')) {
+if (ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_final')) {
     document.getElementById('votedBanner').classList.add('show');
     document.getElementById('btnSubmit').disabled = true;
     document.getElementById('btnSubmit').textContent = 'Jau balsavote';
 }
 
-// ============================================================
-// Voting logic
-// ============================================================
 function getChecked() { return document.querySelectorAll('input[name="costume"]:checked'); }
 
 function updateVotes() {
     const count = getChecked().length;
     document.getElementById('voteCountNum').textContent = count;
-    const alreadyVoted = ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_2');
+    const alreadyVoted = ONE_VOTE_PER_BROWSER && localStorage.getItem('costume_voted_final');
     document.getElementById('btnSubmit').disabled = count === 0 || alreadyVoted;
     document.querySelectorAll('.costume-card').forEach(card => {
         card.classList.toggle('selected', card.querySelector('input').checked);
@@ -261,18 +219,13 @@ function showToast(message, type) {
 function submitVotes() {
     const checked = getChecked();
     if (!checked.length) return;
-
     const btn = document.getElementById('btnSubmit');
     btn.textContent = 'Siunčiama...';
     btn.disabled = true;
-
-    // Collect data
     const selectedIds = Array.from(checked).map(cb => cb.value);
     const selectedLabels = Array.from(checked).map(cb =>
         cb.closest('.costume-card').getAttribute('data-label')
     );
-
-    // Send as form-urlencoded via fetch (no CORS issues with this format)
     const params = new URLSearchParams();
     params.append('timestamp', new Date().toISOString());
     params.append('votes', selectedIds.join(', '));
@@ -285,7 +238,7 @@ function submitVotes() {
         body: params
     }).then(() => {
         if (ONE_VOTE_PER_BROWSER) {
-            localStorage.setItem('costume_voted_2', Date.now());
+            localStorage.setItem('costume_voted_final', Date.now());
             document.getElementById('votedBanner').classList.add('show');
             btn.textContent = 'Jau balsavote';
             btn.disabled = true;
@@ -302,7 +255,6 @@ function submitVotes() {
     });
 }
 
-// Scroll effect
 window.addEventListener('scroll', () => {
     document.getElementById('voteBar').classList.toggle('scrolled', window.scrollY > 100);
 });
